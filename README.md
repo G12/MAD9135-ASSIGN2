@@ -7,5 +7,4 @@ Group Members
 
 Thomas Wiegand - wieg0002
 Richard Jackson - jack0179
-Warren Butland - butl0042
-Ian MacDonald - macd0719
+
