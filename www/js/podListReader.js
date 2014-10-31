@@ -1,5 +1,5 @@
 ﻿/**
- * RSS Reader
+ * RJ TW
  */
 var podListReader = {
     _objArray:null,
