@@ -1,0 +1,56 @@
+﻿{
+    "Channels": [
+        {
+            "title": "Big Bird Folies",
+            "folderName": "Big_Bird_Folies",
+            "image_url": "http://sesamestreet.com/images/bigbird.jpg",
+            "image_path": "file:///data/data/com.algonquin.mad9135.assign2/files/bigbird.jpg",
+            "description": "Bigbird reports on the sesame scene.",
+            "Podcasts": [
+                {
+                    "title": "Tuesday is Letter day.",
+                    "safeName": "Tuesday_is_Letter_day_",
+                    "description": "Big Bird interviews the letter J.",
+                    "type": "audio/mpeg",
+                    "length": "29574449",
+                    "url": "http://sesamestreet.com/TuesdayIsLetterDay.mp3",
+                    "fileURL": "file:///data/data/com.algonquin.mad9135.assign2/files/TuesdayIsLetterDay.mp3"
+                },
+                {
+                    "title": "Tuesday is Letter day.",
+                    "safeName": "Tuesday_is_Letter_day_",
+                    "description": "Big Bird interviews the letter J.",
+                    "type": "audio/mpeg",
+                    "length": "29574449",
+                    "url": "http://sesamestreet.com/TuesdayIsLetterDay.mp3",
+                    "fileURL": "file:///data/data/com.algonquin.mad9135.assign2/files/TuesdayIsLetterDay.mp3"
+                }
+            ]
+        },
+        {
+            "title": "Grizzly Adams on Etiquette",
+            "folderName": "Big_Bird_Folies",
+            "image_url": "http://sesamestreet.com/images/bigbird.jpg",
+            "image_path": "file:///data/data/com.algonquin.mad9135.assign2/files/bigbird.jpg",
+            "description": "Bigbird reports on the sesame scene.",
+            "Podcasts": [
+                {
+                    "title": "Tuesday is Letter day.",
+                    "description": "Big Bird interviews the letter J.",
+                    "type": "audio/mpeg",
+                    "length": "29574449",
+                    "url": "http://sesamestreet.com/TuesdayIsLetterDay.mp3",
+                    "fileURL": "file:///data/data/com.algonquin.mad9135.assign2/files/TuesdayIsLetterDay.mp3"
+                },
+                {
+                    "title": "Tuesday is Letter day.",
+                    "description": "Big Bird interviews the letter J.",
+                    "type": "audio/mpeg",
+                    "length": "29574449",
+                    "url": "http://sesamestreet.com/TuesdayIsLetterDay.mp3",
+                    "fileURL": "file:///data/data/com.algonquin.mad9135.assign2/files/TuesdayIsLetterDay.mp3"
+                }
+            ]
+        }
+    ]
+}
