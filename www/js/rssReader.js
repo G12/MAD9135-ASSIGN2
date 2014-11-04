@@ -40,6 +40,7 @@ var rssReader = {
                     if (xmlDoc)
                     {
                         var title, folderName, image_url, image_path, description;
+                        image_url = "";
                         image_path = fileSys.getDataDir() + "default_channel_img.jpg";
                         var elements = xmlDoc.getElementsByTagName("title");
                         if (elements && elements.length)
@@ -83,11 +84,12 @@ var rssReader = {
                         var items = xmlDoc.getElementsByTagName("item");
                         if (items && items.length)
                         {
-                            result_count = items.length > result_count ? result_count : items.length;
-                            for (i = 0; i < result_count; i++)
+                            var podcast_count = items.length > result_count ? result_count : items.length;
+                            for (var i = 0; i < podcast_count; i++)
                             {
-                                var title, safeName, description, type, length, url, fileURL;
+                                var title, safeName, description, type, length, url, fileURL, status;
                                 fileURL = "";
+                                status = "waiting";
 
                                 var elem = items[i].getElementsByTagName("title")[0];
                                 title = elem.textContent;
@@ -126,7 +128,7 @@ var rssReader = {
                                         safeName: safeName,
                                         description: description.textContent,
                                         url: url, length: length, type: type,
-                                        fileURL: fileURL
+                                        fileURL: fileURL, status: status
                                     };
                                     Channel.Podcasts.push(Podcast);
                                     rssReader.updateChannelsList(Channel);
@@ -141,6 +143,12 @@ var rssReader = {
                         }
                     }
                     console.log("getRSSFeed EXIT");
+                    rssReader.exit();
+                }
+                if (request.status > 300)
+                {
+                    rssReader.errMsg = "Network ERROR: " + request.status;
+                    console.log(rssReader.errMsg);
                     rssReader.exit();
                 }
             }
@@ -169,6 +177,10 @@ var rssReader = {
     },
     getChannelProperties: function () {
         return this._channelProperties;
+    },
+    setStatus: function(channel_id, podcast_id, status)
+    {
+        this._channels_array[channel_id].Podcasts[podcast_id].status = status;
     },
     getErrorMsg: function()
     {

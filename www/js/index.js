@@ -26,14 +26,54 @@ var controller = {
         //File System listeners
         document.addEventListener("FolderListComplete", this.onFolderListComplete.bind(this), false);
         document.addEventListener("podcastDownloadComplete", this.onPodcastDownloadComplete.bind(this), false);
+        document.addEventListener("podCastDeleted", this.onPodcastDeleted.bind(this), false);
         //view event listeners
         document.getElementById("folder_list_container").addEventListener('click', this.onFoldersItemClick.bind(this), false);
         document.getElementById("search_channels_button").addEventListener('click', this.onSearchChannelsButtonClick.bind(this), false);
         document.getElementById("channel_list_container").addEventListener('click', this.onSearchChannelItemClick.bind(this), false);
         document.getElementById("item_list_container").addEventListener('click', this.onListItemClick.bind(this), false);
+        //Button Events
+        document.getElementById("show_stored_podcast_button").addEventListener('click', this.onShowPodcastsClick.bind(this), false);
+        document.getElementById("hide_stored_podcast_button").addEventListener('click', this.onHidePodcastsClick.bind(this), false);
+        document.getElementById("exit_podcast_player").addEventListener('click', this.onExitPodcastPlayerClick.bind(this), false);
+        document.getElementById("show_item_list_container").addEventListener('click', this.onShowItemListClick.bind(this), false);
+        document.getElementById("hide_item_list_container").addEventListener('click', this.onHideItemListClick.bind(this), false);
+
+
+        document.getElementById("show_channel_list_container").addEventListener('click', this.onShowChannelListClick.bind(this), false);
+        document.getElementById("hide_channel_list_container").addEventListener('click', this.onHideChannelListClick.bind(this), false);
+
+
         console.log("controller.bindEvents END");
     },
     //Button Click Events
+    onShowChannelListClick: function()
+    {
+        view.showChannelList();
+    },
+    onHideChannelListClick: function()
+    {
+        view.hideChannelList();
+    },
+    onShowItemListClick: function()
+    {
+        view.showItemList();
+    },
+    onHideItemListClick: function()
+    {
+        view.hideItemList();
+    },
+    onExitPodcastPlayerClick: function()
+    {
+        view.showFolderList();
+    },
+    onShowPodcastsClick: function()
+    {
+        view.showFolderList();
+    },
+    onHidePodcastsClick: function () {
+        view.hideFolderList();
+    },
     onSearchChannelsButtonClick: function () {
         var keywords = document.getElementById("key_words").value;
         var result_count = 7;
@@ -42,26 +82,71 @@ var controller = {
     onSearchChannelItemClick: function (ev) {
         console.log("controller.onSearchChannelItemClick");
         var outline_list = podListReader.getOutlineList();
+        view.showRssReaderWaitingMessage();
         rssReader.getRSSFeed(outline_list[ev.target.id].url, 2);
+        //Remove selected item from the list
+        podListReader.removeItem(ev.target.id);
         console.log("controller.onSearchChannelItemClick END");
     },
     onFoldersItemClick: function(ev)
     {
         ev.preventDefault();
-        var type = ev.target.tagName;
-        if(type == "LI")
+        var type = ev.target.dataset.type;
+        if(type == "podcast")
         {
-            var url = ev.target.getAttribute("data-url");
+            var url = ev.target.dataset.url;
             media.playAudio(url);
+            view.hideAll();
+            view.showPodcastPlayer();
+        }
+        if(type == "button")
+        {
+            var url = ev.target.dataset.url;
+            fileSys.deletePodcast(url);
+        }
+        if(type == "channel")
+        {
+            var folderName = ev.target.dataset.folderName;
+            var folderPath = ev.target.dataset.folderPath;
+            if (confirm("Do you wish to delete the channel" + folderName + "? Path = " + folderPath));
+            {
+                fileSys.deletePodcast(url);
+            }
         }
     },
-    onListItemClick: function (ev) {
+    onListItemClick: function (ev)
+    {
         console.log("controller.onListItemClick");
-        //var item_list = rssReader.getItemList();
-        //var item = item_list[ev.target.id];
-        alert("Podcast id:" + ev.target.id);
-        //fileSys.savePodCast(rssReader.getChannelProperties(), item);
-        //fileSys.saveImage(rssReader.getChannelProperties());
+        ///////////////////////////////////////////  Download Podcast //////////////////////////////////////////
+        if (ev.target.dataset.action == "download")
+        {
+            var arr = ev.target.id.split('_');
+            var channel_index = arr[0];
+            var pod_index = arr[1];
+            var channel_list = rssReader.getChannelList();
+
+            var channel = channel_list[channel_index];
+            var podcast = channel.Podcasts[pod_index];
+
+            if(confirm("download Channel: " + channel.title + " Podcast: " + podcast.title))
+            {
+                fileSys.savePodCast(channel.folderName, podcast.safeName, podcast.url, podcast.title);
+
+                //Set the status of the podcast to downloaded TODO this must be undone if download fails
+                rssReader.setStatus(channel_index, pod_index, "downloaded");
+                //update the channel list
+                channel_list = rssReader.getChannelList();
+                view.drawItemList(channel_list);
+
+                //Prepare to download image
+                var imgage = channel.image_url;
+                if (channel.image_url == "")
+                {
+                    imgage = channel.image_path; //Default Image
+                }
+                fileSys.saveImage(channel.folderName, imgage);
+            }
+        }
         console.log("controller.onListItemClick END");
     },
     //Data Ready Events
@@ -73,6 +158,9 @@ var controller = {
     },
     onRssReaderReady: function () {
         console.log("controller.onRssReaderReady");
+        //Redraw outline list
+        var outline_list = podListReader.getOutlineList();
+        view.drawChannelList(outline_list);
         if (rssReader.success) {
             var channel_list = rssReader.getChannelList();
             view.drawItemList(channel_list);
@@ -91,7 +179,12 @@ var controller = {
     onPodcastDownloadComplete: function () {
         console.log("controller.onPodcastDownloadComplete");
         //enable buttons now
+        fileSys.init();
         console.log("controller.onPodcastDownloadComplete END");
+    },
+    onPodcastDeleted: function () {
+        fileSys.init();
+        alert("Podcast Deleted refreshing List");
     },
     //Going Offline
     //onOffline: function () {
@@ -112,7 +205,7 @@ var controller = {
         alert("Set Breakpoints Now");
         controller.init();
         fileSys.init();
-        view.init("folder_list_container", "channel_list_container", "item_list_container", "download_status");
+        view.init("folder_list_container", "channel_list_container", "item_list_container", "download_status", "podcast_player");
         podListReader.init();
         rssReader.init();
         media.init("stop_button", "pause_button", "resume_button");

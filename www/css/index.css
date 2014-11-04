@@ -1,3 +1,14 @@
-.list_item{    border:1px solid black;    background-color:lightgrey;    margin:10px;}.thumb{
+/******************* Show or Hide Stuff ************************/
+
+.show{
+	display:block;
+}
+.hide{
+	display:none;
+}
+
+/******************* Style Lists of stuff here ************************/
+.channel_item{
+    border:1px solid black;    background-color:black;    margin:10px;}.list_item{    border:1px solid black;    background-color:lightgrey;    margin:10px;}.waiting_item{    border:1px solid black;    background-color:green;    margin:10px;}.staged_item{    border:1px solid black;    background-color:yellow;    margin:10px;}.downloaded_item{    border:1px solid black;    background-color:red;    margin:10px;}.thumb{
     width:100px;
 }

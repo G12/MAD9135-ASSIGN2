@@ -44,6 +44,10 @@ var podListReader = {
         }
         request.send();
     },
+    removeItem: function(id)
+    {
+        this._objArray.splice(id, 1);
+    },
     getOutlineList: function () {
         return this._objArray;
     }
