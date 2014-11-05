@@ -182,6 +182,39 @@ var rssReader = {
     {
         this._channels_array[channel_id].Podcasts[podcast_id].status = status;
     },
+    getChannel: function(folderName)
+    {
+        for (var i = 0; i < this._channels_array.length; i++)
+        {
+            if (this._channels_array[i].folderName == folderName)
+            {
+                return this._channels_array[i];
+            }
+        }
+        return false;
+    },
+    saveToLocalStorage: function()
+    {
+        if (typeof (Storage) !== "undefined") {
+            var json = JSON.stringify(this._channels_array);
+            localStorage.setItem("ChannelList", json);
+        } else {
+            alert("No Local Storage");
+        }
+    },
+    getFromLocalStorage: function () {
+        if (typeof (Storage) !== "undefined") {
+            var json = localStorage.getItem("ChannelList");
+            if (json)
+            {
+                //clear existing if any
+                this._channels_array = [];
+                this._channels_array = JSON.parse(json);
+            }
+        } else {
+            alert("No Local Storage");
+        }
+    },
     getErrorMsg: function()
     {
         return this.errMsg;

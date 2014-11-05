@@ -106,11 +106,11 @@ var controller = {
         }
         if(type == "channel")
         {
-            var folderName = ev.target.dataset.folderName;
-            var folderPath = ev.target.dataset.folderPath;
+            var folderName = ev.target.dataset.foldername;
+            var folderPath = ev.target.dataset.folderpath;
             if (confirm("Do you wish to delete the channel" + folderName + "? Path = " + folderPath));
             {
-                fileSys.deletePodcast(url);
+                fileSys.deletePodcast(folderPath);
             }
         }
     },
@@ -136,6 +136,8 @@ var controller = {
                 rssReader.setStatus(channel_index, pod_index, "downloaded");
                 //update the channel list
                 channel_list = rssReader.getChannelList();
+                //Save changes locally
+                rssReader.saveToLocalStorage();
                 view.drawItemList(channel_list);
 
                 //Prepare to download image
@@ -163,6 +165,7 @@ var controller = {
         view.drawChannelList(outline_list);
         if (rssReader.success) {
             var channel_list = rssReader.getChannelList();
+            rssReader.saveToLocalStorage();
             view.drawItemList(channel_list);
         }
         else {
@@ -201,13 +204,19 @@ var controller = {
 //Cannot initialize from online script Contacts plugin restrictions
 (function start_up() {
     document.addEventListener('deviceready', function () {
-
         alert("Set Breakpoints Now");
+
+        rssReader.init();
+        rssReader.getFromLocalStorage();
+
         controller.init();
         fileSys.init();
         view.init("folder_list_container", "channel_list_container", "item_list_container", "download_status", "podcast_player");
+
+        var channel_list = rssReader.getChannelList();
+        view.drawItemList(channel_list);
+
         podListReader.init();
-        rssReader.init();
         media.init("stop_button", "pause_button", "resume_button");
         //controller.onDeviceReady();
     }, false);

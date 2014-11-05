@@ -109,8 +109,15 @@ var view = {
                 //TODO check for other possible extensions
                 if ("image.jpg" == file.name || "image.png" == file.name)
                 {
-                    img = '<div  data-type="channel" " data-folderName="' + folder.folderName + '" data-folderPath="' + folder.folderPath + '"><img class="thumb" src="' + file.url + '" alt="' + folder.folderName +
-                        '" title="' + folder.folderName + '"/><p>' + folder.folderName + '</p></div>';
+                    if (files.length == 1)
+                    {
+                        img = '<div data-type="channel" " data-folderName="' + folder.folderName + '" data-folderPath="' + file.url + '">Delete ' + folder.folderName + '</div>';
+                    }
+                    else
+                    {
+                        img = '<div><img class="thumb" src="' + file.url + '" alt="' + folder.folderName +
+                            '" title="' + folder.folderName + '"/><p>' + folder.folderName + '</p></div>';
+                    }
                 }
                 else
                 {
@@ -164,5 +171,10 @@ var view = {
                 this.download_status.removeChild(obj.div);
             }
         }
+    },
+    drawMediaSlider: function(max)
+    {
+        var html = '<input type="range" min="0" max="100" value="50" id="position_slider" step="1" >';
+        html += '<output for="position_slider" id="position">50</output>';
     }
 };
