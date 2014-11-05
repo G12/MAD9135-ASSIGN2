@@ -9,7 +9,7 @@ var media = {
     pause_button: null,
     resume_button: null,
 	 player: null,
-    init: function (stop_button_id, pause_button_id, resume_button_id) {
+    init: function (stop_button_id, pause_button_id, resume_button_id, forward_button_id) {
 		
 		 player = document.getElementById("podcast_player");
         stop_button = document.getElementById(stop_button_id);
@@ -20,6 +20,9 @@ var media = {
 
         resume_button = document.getElementById(resume_button_id);
         resume_button.addEventListener('click', this.onResumeClicked.bind(this), false);
+		
+		 forward_button = document.getElementById(forward_button_id);
+        forward_button.addEventListener('click', this.onForwardClicked.bind(this), false);
     },
     playAudio: function (url) {
         // Play the audio file at url
@@ -70,5 +73,26 @@ var media = {
         this.my_media.play();
 		
     },
+	onForwardClicked: function (){
+		var fastForward = 0;
+		
+		this.my_media.getCurrentPosition(
+        	// success callback
+        	function (position) {
+            	if (position > -1) {
+					fastForward = (position * 1000) + 10000;
+					media.seekTo(fastForward);	
+            	}
+        },
+        // error callback
+        function (e) {
+            console.log("Error getting pos=" + e);
+        })
+		
+	},
+	seekTo: function (ms){
+		console.log("ARGHHHH " + ms);
+		this.my_media.seekTo(ms);
+	}
 
 };

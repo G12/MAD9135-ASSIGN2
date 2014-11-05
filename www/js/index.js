@@ -200,7 +200,7 @@ var controller = {
         view.init("folder_list_container", "channel_list_container", "item_list_container", "download_status", "podcast_player");
         podListReader.init();
         rssReader.init();
-        media.init("stop_button", "pause_button", "resume_button");
+        media.init("stop_button", "pause_button", "resume_button", "forward_button");
         //controller.onDeviceReady();
     }, false);
 })();
