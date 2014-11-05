@@ -13,11 +13,11 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Media\"><param name=\"android-package\" value=\"org.apache.cordova.media.AudioHandler\" /></feature>",
+                            "xml": "<feature name=\"FileTransfer\"><param name=\"android-package\" value=\"org.apache.cordova.filetransfer.FileTransfer\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"FileTransfer\"><param name=\"android-package\" value=\"org.apache.cordova.filetransfer.FileTransfer\" /></feature>",
+                            "xml": "<feature name=\"Media\"><param name=\"android-package\" value=\"org.apache.cordova.media.AudioHandler\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -48,15 +48,16 @@
         }
     },
     "installed_plugins": {
-        "org.apache.cordova.file": {
+        "org.apache.cordova.file-transfer": {
             "PACKAGE_NAME": "com.algonquin.mad9135.assign2"
         },
         "org.apache.cordova.media": {
             "PACKAGE_NAME": "com.algonquin.mad9135.assign2"
-        },
-        "org.apache.cordova.file-transfer": {
-            "PACKAGE_NAME": "com.algonquin.mad9135.assign2"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "org.apache.cordova.file": {
+            "PACKAGE_NAME": "com.algonquin.mad9135.assign2"
+        }
+    }
 }

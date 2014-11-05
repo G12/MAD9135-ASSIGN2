@@ -1,5 +1,4 @@
 ﻿/// <reference path="fileSystem.js" />
-
 /**
  * RJ TW
  */
@@ -40,8 +39,12 @@ var rssReader = {
                     if (xmlDoc)
                     {
                         var title, folderName, image_url, image_path, description;
+
+                        image_path = "file:///img/noImage.png";
+                        var pod_link = xmlDoc.getElementsByTagName("link")[0].textContent;
+                        var items = xmlDoc.getElementsByTagName("item");
                         image_url = "";
-                        image_path = fileSys.getDataDir() + "default_channel_img.jpg";
+                        
                         var elements = xmlDoc.getElementsByTagName("title");
                         if (elements && elements.length)
                         {
@@ -68,20 +71,23 @@ var rssReader = {
                                 image_url = elements[0].textContent;
                             }
                         }
+                        var numcasts = items.length;
                         rssReader._channelProperties = {
                             title: title,
                             folderName: folderName,
                             description: description,
                             image_url: image_url,
-                            image_path: image_path
+                            image_path: image_path,
+                            pod_link: pod_link,
+                            numcasts: numcasts
                         }
                         var Podcasts = [];
                         var Channel = {
                                 title: title, folderName: folderName, image_url: image_url,
-                                image_path: image_path, description: description, Podcasts: Podcasts
+                                image_path: image_path, description: description, Podcasts: Podcasts,
+                                pod_link: pod_link, numcasts: numcasts
                             };
 
-                        var items = xmlDoc.getElementsByTagName("item");
                         if (items && items.length)
                         {
                             var podcast_count = items.length > result_count ? result_count : items.length;

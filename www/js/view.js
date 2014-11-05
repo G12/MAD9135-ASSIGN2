@@ -54,45 +54,6 @@ var view = {
     hideItemList: function () {
         this.item_list_container.className = "hide";
     },
-    showItemList: function () {
-        this.item_list_container.className = "show";
-    },
-    drawItemList: function (channel_list) {
-        //Clear the div first
-        this.item_list_container.innerHTML = "";
-        var html = "";
-        for (var i = 0; i < channel_list.length; i++) {
-            var channel = channel_list[i];
-            html += '<fieldset><legend>' + channel.title + '</legend>';
-            for (var j = 0; j < channel.Podcasts.length; j++)
-            {
-                var podcast = channel.Podcasts[j];
-                html += '<div class="channel_item"><div id="' + i + '_' + j + '" class="list_item" data-action="show_information">' + podcast.title + '</div>';
-                if(podcast.status === "waiting")
-                {
-                    html += '<div id="' + i + '_' + j + '" class="waiting_item" data-action="download">Download</div>';
-                }
-                if(podcast.status === "staged")
-                {
-                    html += '<div id="' + i + '_' + j + '" class="staged_item" data-action="download">Wating to Download</div>';
-                }
-                if(podcast.status === "downloaded")
-                {
-                    html += '<div id="' + i + '_' + j + '" class="downloaded_item" data-action="delete">Delete</div>';
-                }
-                html += "</div>";
-            }
-            html += "</fieldset>";
-        }
-        this.item_list_container.innerHTML = html;
-    },
-    //List of podcasts stored on machine
-    hideFolderList: function () {
-        this.folder_list_container.className = "hide";
-    },
-    showFolderList: function () {
-        this.folder_list_container.className = "show";
-    },
     drawFoldersList: function (folders)
     {
         this.folder_list_container.innerHTML = "";
@@ -176,5 +137,116 @@ var view = {
     {
         var html = '<input type="range" min="0" max="100" value="50" id="position_slider" step="1" >';
         html += '<output for="position_slider" id="position">50</output>';
+    },
+    showItemList: function () {
+        this.item_list_container.className = "show";
+    },
+    drawItemList: function (channel_list) {
+        //Clear the div first
+        this.item_list_container.innerHTML = "";
+        var html = "";
+        for (var i = 0; i < channel_list.length; i++) {
+            var channel = channel_list[i];
+			console.log("IMAGE URL: "+ channel.image_url);
+            var html = '<div id="titleBlock"><span class="desc"><h1>'+ channel.title +'</h1><h2><a href="'+ channel.pod_link +'">'+ channel.pod_link + '</a></h2><h3>Podcasts: '+ channel.numcasts +'</h3></span></div>';
+            for (var j = 0; j < channel.Podcasts.length; j++)
+            {
+                var podcast = channel.Podcasts[j];
+                html += '<div class="channel_item"><div id="' + i + '_' + j + '" class="list_item  podcast_title_bar" data-action="show_information">' + podcast.title + '</div>';
+                if(podcast.status === "waiting")
+                {
+                    html += '<img src="img/download.png" id="' + i + '_' + j + '" class="waiting_item download_btn" data-action="download"/>';
+                }
+                if(podcast.status === "staged")
+                {
+                    html += '<div id="' + i + '_' + j + '" class="staged_item" data-action="download">Wating to Download</div>';
+                }
+                if(podcast.status === "downloaded")
+                {
+                    html += '<img src="img/delete.png" id="' + i + '_' + j + '" class="downloaded_item delete_btn" data-action="delete"/>';
+                }
+                html += "</div>";
+            }
+        }
+        this.item_list_container.innerHTML = html;
+    },
+    //List of podcasts stored on machine
+    hideFolderList: function () {
+        this.folder_list_container.className = "hide";
+    },
+    showFolderList: function () {
+        this.folder_list_container.className = "show";
+    },
+    drawFoldersList: function (folders)
+    {
+        this.folder_list_container.innerHTML = "";
+        var html = "";
+        for (var i = 0; i < folders.length; i++) {
+            var folder = folders[i];
+            console.log(folder.folderName);
+            var img = "<p>" + folder.folderName + "</p>";
+            var temp = "";
+            files = folder.files;
+            for (var j = 0; j < files.length; j++) {
+                var file = files[j];
+                console.log("    " + file.name + " " + file.url);
+                //TODO check for other possible extensions
+                if ("image.jpg" == file.name || "image.png" == file.name)
+                {
+                    img = '<div  data-type="channel" " data-folderName="' + folder.folderName + '" data-folderPath="' + folder.folderPath + '"><img class="thumb" src="' + file.url + '" alt="' + folder.folderName +
+                        '" title="' + folder.folderName + '"/></div>';
+                }
+                else
+                {
+                    temp += '<div data-type="podcast" class="waiting_item list_item stored_item" id="' + file.id + '" data-url="' + file.url + '">' + file.name + '</div>';
+                    temp += '<img src="img/delete.png" data-type="button" class="downloaded_item delete_btn" data-url="' + file.url + '"/>';
+                }
+            }
+            html += img + '<ul>' + temp + '</ul>';
+        }
+        this.folder_list_container.innerHTML = html;
+    },
+    //Podcast
+    showPodcastPlayer:function()
+    {
+        this.podcast_player.className = "show";
+    },
+    //download Podcast Progress Bar
+    addProgressBar: function(id)
+    {
+        var div = document.createElement("div");
+        //div.setAttribute("id", id);
+        //Add custom html here
+        //div.innerHTML = '';
+        this.download_status.appendChild(div);
+        var obj = { id: id, div: div };
+        this._progress_bars.push(obj);
+    },
+    updateProgressBar: function(id, percent, title)
+    {
+        //Get the div containing progress bar
+        for(var i=0; i < this._progress_bars.length; i++)
+        {
+            var obj = this._progress_bars[i];
+            if(obj.id == id)
+            {
+                var html = "Podcast: " + title + "Loading";
+                if (percent)
+                {
+                    html = title + ": " + percent + "% loaded...";
+                }
+                obj.div.innerHTML = html;
+            }
+        }
+    },
+    progressComplete: function(id)
+    {
+        //Get the div containing progress bar
+        for (var i = 0; i < this._progress_bars.length; i++) {
+            var obj = this._progress_bars[i];
+            if (obj.id == id) {
+                this.download_status.removeChild(obj.div);
+            }
+        }
     }
 };
