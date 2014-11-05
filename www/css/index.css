@@ -1,14 +1,168 @@
-/******************* Show or Hide Stuff ************************/
-
-.show{
-	display:block;
-}
-.hide{
-	display:none;
+*{
+    margin: 0px;
+    padding: 0px;
 }
 
-/******************* Style Lists of stuff here ************************/
-.channel_item{
-    border:1px solid black;    background-color:black;    margin:10px;}.list_item{    border:1px solid black;    background-color:lightgrey;    margin:10px;}.waiting_item{    border:1px solid black;    background-color:green;    margin:10px;}.staged_item{    border:1px solid black;    background-color:yellow;    margin:10px;}.downloaded_item{    border:1px solid black;    background-color:red;    margin:10px;}.thumb{
-    width:100px;
+body{
+    background:#eeffff;
+}
+
+#header{
+    width: 100%;
+    background:#35607F;
+    height: 55px;
+}
+
+#header input{
+    width:80%;
+    height: 20px;
+    margin-top: 3.5%;
+    margin-left: 10px;
+}
+
+#search_channels_button{
+    width:10%;
+    margin-top:2%;
+    float:right;
+    margin-right:3%;
+
+}
+
+#channel_list_container{
+
+}
+
+.channel_list_item{
+    margin: 0.5%;
+    width: 95%;
+    padding: 2%;
+    border-radius: 4px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 0.8em;
+    font-weight: bolder;
+    background-color:#415464;
+    color:#fff;
+}
+
+
+.list_item{
+    clear: both;
+    margin: 0.5%;
+    width: 95%;
+    padding: 2%;
+    border-radius: 4px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 0.6em;
+    font-weight: bolder;
+    background-color:#415464;
+    color:#fff;
+}
+
+
+
+.thumb{
+    margin: 0.5%;
+    width:20%;
+    height:20%;
+	float:left;
+}
+
+
+.stored_item{
+	width:80%;
+	margin-right:4.5%;
+	float:left;
+
+}
+
+.desc{
+   
+    width: 52%;
+    font-family: Verdana, Geneva, sans-serif;
+
+}
+
+#titleBlock{
+	margin-left:1%;
+	margin-top:2%;
+  
+}
+
+#titleBlock h1{
+    font-size: 1em;   
+}
+
+#titleBlock h2{
+    font-size: 0.8em;
+    color:#415464
+}
+
+#titleBlock h3{
+    font-size: 0.8em;   
+}
+
+
+.player_button{
+	width:	14%;
+
+	margin:0 3%;
+	float:left;
+}
+
+#podcast_player{
+	width:70%;
+	padding: 2.5% 15%;
+	background-color:#b8d9eb;
+}
+
+.podcast_title_bar{
+	width:80%;
+	float:left;
+	margin-right:4%;
+}
+.download_btn{
+	float:left;
+	width:7%;
+	margin-top:1%;
+
+}
+
+.delete_btn{
+	float:left;
+	width:7%;
+	margin-top:1%;
+
+	
+}
+
+#pause_button{
+	width:40px;
+	height:40px;
+	background:url(../img/pause.png) no-repeat;
+	background-size:auto 100%;
+	background-position:left top;
+	border:none;
+	margin-left:13%;
+
+}
+
+#resume_button{
+	width:40px;
+	height:40px;
+	background:url(../img/play.png) no-repeat;
+	background-size:auto 100%;
+	background-position:left top;
+	border:none;
+	margin:0% 10%;
+
+}
+
+#stop_button{
+	width:40px;
+	height:40px;
+	background:url(../img/stop.png) no-repeat;
+	background-size:auto 100%;
+	background-position:left top;
+	border:none;
+
 }

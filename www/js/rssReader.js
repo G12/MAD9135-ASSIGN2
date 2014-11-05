@@ -40,9 +40,13 @@ var rssReader = {
                     if (xmlDoc)
                     {
                         var title, folderName, image_url, image_path, description;
-                        image_url = "";
-                        image_path = fileSys.getDataDir() + "default_channel_img.jpg";
-                        var elements = xmlDoc.getElementsByTagName("title");
+              			  
+                       image_path = fileSys.getDataDir() + "file:///img/noImage.png";
+                       	var elements = xmlDoc.getElementsByTagName("title");
+						  var pod_link = xmlDoc.getElementsByTagName("link")[0].textContent;
+						  var items = xmlDoc.getElementsByTagName("item");
+						  
+						  
                         if (elements && elements.length)
                         {
                             title = elements[0].textContent;
@@ -65,7 +69,9 @@ var rssReader = {
                             elements = elements[0].getElementsByTagName("url");
                             if(elements && elements.length)
                             {
+								
                                 image_url = elements[0].textContent;
+									console.log("IMAGE URL INSIDE RSSREADER: "+ image_url);
                             }
                         }
                         rssReader._channelProperties = {
@@ -73,15 +79,18 @@ var rssReader = {
                             folderName: folderName,
                             description: description,
                             image_url: image_url,
-                            image_path: image_path
+                            image_path: image_path,
+								pod_link: pod_link,
+								numcasts: items.length
                         }
                         var Podcasts = [];
                         var Channel = {
                                 title: title, folderName: folderName, image_url: image_url,
-                                image_path: image_path, description: description, Podcasts: Podcasts
+                                image_path: image_path, description: description, Podcasts: Podcasts,pod_link: pod_link,
+									numcasts: items.length
                             };
 
-                        var items = xmlDoc.getElementsByTagName("item");
+                        
                         if (items && items.length)
                         {
                             var podcast_count = items.length > result_count ? result_count : items.length;
