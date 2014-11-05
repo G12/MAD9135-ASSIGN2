@@ -34,20 +34,10 @@ var controller = {
         document.getElementById("item_list_container").addEventListener('click', this.onListItemClick.bind(this), false);
         //Button Events
 		
-        /*
-        document.getElementById("exit_podcast_player").addEventListener('click', this.onExitPodcastPlayerClick.bind(this), false);
-        
-		document.getElementById("show_stored_podcast_button").addEventListener('click', this.onShowPodcastsClick.bind(this), false);
-        document.getElementById("hide_stored_podcast_button").addEventListener('click', this.onHidePodcastsClick.bind(this), false);
-		document.getElementById("show_item_list_container").addEventListener('click', this.onShowItemListClick.bind(this), false);
-        document.getElementById("hide_item_list_container").addEventListener('click', this.onHideItemListClick.bind(this), false);
-		
-
-        document.getElementById("show_channel_list_container").addEventListener('click', this.onShowChannelListClick.bind(this), false);
-        document.getElementById("hide_channel_list_container").addEventListener('click', this.onHideChannelListClick.bind(this), false);
-*/
-        console.log("controller.bindEvents END");
-    },
+    
+    console.log("controller.bindEvents END");
+    
+	},
     //Button Click Events
     onShowChannelListClick: function()
     {
