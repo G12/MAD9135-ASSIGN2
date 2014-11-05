@@ -204,7 +204,7 @@ var controller = {
 (function start_up() {
     document.addEventListener('deviceready', function () {
 
-        alert("Set Breakpoints Now");
+        //alert("Set Breakpoints Now");
         controller.init();
         fileSys.init();
         view.init("folder_list_container", "channel_list_container", "item_list_container", "download_status", "podcast_player");

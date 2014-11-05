@@ -113,6 +113,8 @@ body{
 	width:70%;
 	padding: 2.5% 15%;
 	background-color:#b8d9eb;
+	display:none;
+
 }
 
 .podcast_title_bar{
