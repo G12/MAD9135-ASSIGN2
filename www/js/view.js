@@ -63,14 +63,15 @@ var view = {
         var html = "";
         for (var i = 0; i < channel_list.length; i++) {
             var channel = channel_list[i];
-            html += '<fieldset><legend>' + channel.title + '</legend>';
+			console.log("IMAGE URL: "+ channel.image_url);
+            var html = '<div id="titleBlock"><span class="desc"><h1>'+ channel.title +'</h1><h2><a href="'+ channel.pod_link +'">'+ channel.pod_link + '</a></h2><h3>Podcasts: '+ channel.numcasts +'</h3></span></div>';
             for (var j = 0; j < channel.Podcasts.length; j++)
             {
                 var podcast = channel.Podcasts[j];
-                html += '<div class="channel_item"><div id="' + i + '_' + j + '" class="list_item" data-action="show_information">' + podcast.title + '</div>';
+                html += '<div class="channel_item"><div id="' + i + '_' + j + '" class="list_item  podcast_title_bar" data-action="show_information">' + podcast.title + '</div>';
                 if(podcast.status === "waiting")
                 {
-                    html += '<div id="' + i + '_' + j + '" class="waiting_item" data-action="download">Download</div>';
+                    html += '<img src="img/download.png" id="' + i + '_' + j + '" class="waiting_item download_btn" data-action="download"/>';
                 }
                 if(podcast.status === "staged")
                 {
@@ -78,11 +79,10 @@ var view = {
                 }
                 if(podcast.status === "downloaded")
                 {
-                    html += '<div id="' + i + '_' + j + '" class="downloaded_item" data-action="delete">Delete</div>';
+                    html += '<img src="img/delete.png" id="' + i + '_' + j + '" class="downloaded_item delete_btn" data-action="delete"/>';
                 }
                 html += "</div>";
             }
-            html += "</fieldset>";
         }
         this.item_list_container.innerHTML = html;
     },
@@ -110,12 +110,12 @@ var view = {
                 if ("image.jpg" == file.name || "image.png" == file.name)
                 {
                     img = '<div  data-type="channel" " data-folderName="' + folder.folderName + '" data-folderPath="' + folder.folderPath + '"><img class="thumb" src="' + file.url + '" alt="' + folder.folderName +
-                        '" title="' + folder.folderName + '"/><p>' + folder.folderName + '</p></div>';
+                        '" title="' + folder.folderName + '"/></div>';
                 }
                 else
                 {
-                    temp += '<div data-type="podcast" class="waiting_item" id="' + file.id + '" data-url="' + file.url + '">' + file.name + '</div>';
-                    temp += '<div data-type="button" class="downloaded_item" data-url="' + file.url + '">Delete</div>';
+                    temp += '<div data-type="podcast" class="waiting_item list_item stored_item" id="' + file.id + '" data-url="' + file.url + '">' + file.name + '</div>';
+                    temp += '<img src="img/delete.png" data-type="button" class="downloaded_item delete_btn" data-url="' + file.url + '"/>';
                 }
             }
             html += img + '<ul>' + temp + '</ul>';
