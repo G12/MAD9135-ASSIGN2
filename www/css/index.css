@@ -110,8 +110,8 @@ body{
 }
 
 #podcast_player{
-	width:70%;
-	padding: 2.5% 15%;
+	width:50%;
+	padding: 2.5% 25%;
 	background-color:#b8d9eb;
 	display:none;
 
@@ -144,7 +144,7 @@ body{
 	background-size:auto 100%;
 	background-position:left top;
 	border:none;
-	margin-left:13%;
+
 
 }
 
@@ -155,7 +155,7 @@ body{
 	background-size:auto 100%;
 	background-position:left top;
 	border:none;
-	margin:0% 10%;
+
 
 }
 
@@ -163,6 +163,16 @@ body{
 	width:40px;
 	height:40px;
 	background:url(../img/stop.png) no-repeat;
+	background-size:auto 100%;
+	background-position:left top;
+	border:none;
+
+}
+
+#forward_button{
+	width:40px;
+	height:40px;
+	background:url(../img/forward.png) no-repeat;
 	background-size:auto 100%;
 	background-position:left top;
 	border:none;

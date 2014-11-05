@@ -42,7 +42,7 @@ var rssReader = {
                         var title, folderName, image_url, image_path, description;
               			  
                        image_path = fileSys.getDataDir() + "file:///img/noImage.png";
-                       	var elements = xmlDoc.getElementsByTagName("title");
+                        var elements = xmlDoc.getElementsByTagName("title");
 						  var pod_link = xmlDoc.getElementsByTagName("link")[0].textContent;
 						  var items = xmlDoc.getElementsByTagName("item");
 						  
@@ -86,8 +86,7 @@ var rssReader = {
                         var Podcasts = [];
                         var Channel = {
                                 title: title, folderName: folderName, image_url: image_url,
-                                image_path: image_path, description: description, Podcasts: Podcasts,pod_link: pod_link,
-									numcasts: items.length
+                                image_path: image_path, description: description, Podcasts: Podcasts, pod_link: pod_link, numcasts: items.length
                             };
 
                         
